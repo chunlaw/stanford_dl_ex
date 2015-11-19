@@ -23,19 +23,24 @@
   %
 %%% YOUR CODE HERE %%%
   lf = zeros (size(theta));
-
+  
   for i = 1:columns(X)
     lf(i) = logistic_function ( theta' * X(:,i) );
     f += y(i) * log ( lf(i) );
     f += ( 1-y(i) ) * log ( 1 - lf(i) );
   endfor
   f = -f;
-
-  for i = 1:columns(X)
-    for j = 1:rows(X)  
-      g(j) += X(j,i) .* ( lf(i) - y(i) );
-    endfor
-  endfor 
+ 
+  %y_hat = lf' * X;
+  g = X * (lf - y');
+%  m = rows(X);
+%  n = columns(X);  
+%  for i = 1:n
+%    for j = 1:m
+%      g(j) += X(j,i) * ( lf(i) - y(i) );
+%    endfor
+%    fprintf ("%d\n",i);
+%  endfor 
   
 endfunction
 
