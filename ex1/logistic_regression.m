@@ -1,4 +1,4 @@
-function [f,g] = logistic_regression(theta, X,y)
+ function [f,g] = logistic_regression(theta, X,y)
   %
   % Arguments:
   %   theta - A column vector containing the parameter values to optimize.
@@ -22,3 +22,23 @@ function [f,g] = logistic_regression(theta, X,y)
   %        up the gradients (df/dtheta) for each example. Store the result in 'g'.
   %
 %%% YOUR CODE HERE %%%
+  lf = zeros (size(theta));
+
+  for i = 1:columns(X)
+    lf(i) = logistic_function ( theta' * X(:,i) );
+    f += y(i) * log ( lf(i) );
+    f += ( 1-y(i) ) * log ( 1 - lf(i) );
+  endfor
+  f = -f;
+
+  for i = 1:columns(X)
+    for j = 1:rows(X)  
+      g(j) += X(j,i) .* ( lf(i) - y(i) );
+    endfor
+  endfor 
+  
+endfunction
+
+function h = logistic_function ( z )
+  h = 1 / ( 1 +  exp ( -z ) );
+endfunction
